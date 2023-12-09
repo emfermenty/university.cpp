@@ -4,20 +4,14 @@
 
 using namespace std;
 
-int main()
-{
-    setlocale(LC_ALL, "Russian");
-    SetConsoleCP(1251);
-    SetConsoleOutputCP(1251);
-
-
-    int i = 0;
+int main() {
     string s;
-    cout << "string: \n";
-    getline(cin, s);
-    while (s[i]) {
-        s[i] = toupper(s[i]);
-        i++;
+    cout << "Enter the string: ";
+    cin >> s;
+    for (char& c : s) {
+        if (c >= 'a' && c <= 'z'){
+            c= c - 'a'+ 'A';
+        }
     }
-    cout << s << endl;
+    cout << s;
 }
