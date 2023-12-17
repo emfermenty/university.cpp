@@ -20,12 +20,12 @@ int main() {
   }
 
   for (int i = 0; i < input.length(); i++) {
-    if (input[i] == ' ') {
+    if (input[i] == ' ') {  // если встречается пробел, проводим проверку
       if (word.length() > 1 && word[0] == word[word.length() - 1]) {
         count++;
       }
-      word = "";
-    } else {
+      word = ""; // и обнулям переменную до след пробела
+    } else {   //записываем по букве в переменную
       word += input[i];
     }
   }
