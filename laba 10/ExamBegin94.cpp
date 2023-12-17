@@ -30,9 +30,9 @@ int main() {
     }
   }
 
-//  if (word.length() > 1 && word[0] == word[word.length() - 1]) {
-//    count++;
-//  }
+  if (word.length() > 1 && word[0] == word[word.length() - 1]) {  //так как в конце строки пробел не ставится, проверка на последнее слово
+    count++;
+  }
 
   cout << "kol-vo slov, where first symbol and last symbol equal: " << count << endl;
 
