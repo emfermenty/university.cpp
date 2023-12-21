@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <string>
-#include <random>
+#include <ctime>
 
 using namespace std;
 
@@ -12,20 +12,19 @@ int main() {
     cin >> word;
 
     string shuffled_word = word;
-    random_device rd;
-    mt19937 g(rd());
+    srand(time(0));
 
-    int count = 0;
+    int count = 1;
     for (int i = 0; i < shuffled_word.length(); i++) {
-        int j = uniform_int_distribution<>(0, word.length() - 1)(g);
-        char temp = shuffled_word[i];
-        shuffled_word[i] = shuffled_word[j];
+        int j = rand() % shuffled_word.length(); 
+        char temp = shuffled_word[i];  
+        shuffled_word[i] = shuffled_word[j]; 
         shuffled_word[j] = temp;
     }
 
-    while (shuffled_word != word) {
+    while (shuffled_word != word) { 
         for (int i = 0; i < shuffled_word.length(); i++) {
-            int j = uniform_int_distribution<>(0, word.length() - 1)(g);
+            int j = rand() % shuffled_word.length();
             char temp = shuffled_word[i];
             shuffled_word[i] = shuffled_word[j];
             shuffled_word[j] = temp;
