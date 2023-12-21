@@ -24,6 +24,6 @@ int main() {
             s = "";
         }
     }
-    system("pause");
+
     return 0;
 }
