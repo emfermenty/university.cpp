@@ -12,9 +12,9 @@ string f(string s) {
 
 int main() {
     string s, str;
-    cout << "PRESS TEXT:\n";
+    cout << "press text:\n";
     getline(cin, str);
-    cout << "INFO:\n";
+    cout << "itog:\n";
     str += " ";
     for (int i = 0; i < str.size(); i++) {
         s += str[i];
