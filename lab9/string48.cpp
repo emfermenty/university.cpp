@@ -5,7 +5,7 @@
 using namespace std;
 
 string f(string s) {
-    for (int i = 0; s[++i];)
+    for (int i = 1; i < s.size(); i++)
         if (s[i] == s[0]) s[i] = '.';
     return s;
 }
