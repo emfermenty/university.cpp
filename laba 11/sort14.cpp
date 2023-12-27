@@ -33,6 +33,14 @@ int binarysearch(int arr[], int n, int x) {
 
 int main()
 {
+    ofstream zapfile("binary.txt");
+    int k = 2;
+    for (int i = 0; i < 200; i++) {
+        zapfile << k << " ";
+        k += 2;
+    }
+    zapfile.close();
+
     ifstream file("binary.txt");
     int count=0;
     int n;
