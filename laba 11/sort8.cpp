@@ -33,7 +33,9 @@ void sort_vybor(int arr[], int n)
         file << "Итерация " << i + 1 << ": ";
         for (int j = 0; j < n; j++) {
             if (j == i) {
+                ffile << arr[j] << " ";
                 file << "| ";
+                j++;
             }
             file << arr[j] << " ";
         }
