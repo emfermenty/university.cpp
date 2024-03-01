@@ -1,7 +1,4 @@
-﻿#include <iostream>
-#include <string>
-
-using namespace std;
+//File36. Дан файл целых чисел. Удвоить его размер, записав в конец файла все его исходные элементы (в том же порядке).
 
 #include <iostream>
 #include <fstream>
