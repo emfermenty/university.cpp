@@ -30,7 +30,14 @@ struct ClientData {
 };
 
 void enterClientData(ClientData& client) {
-   cin >> client.duration >> client.clientCode >> client.year >> client.month;
+    cout << "Введите продолжительность: ";
+    cin >> client.duration;
+    cout << "Введите код клиента: ";
+    cin >> client.clientCode;
+    cout << "Введите год: ";
+    cin >> client.year;
+    cout << "Месяц: ";
+    cin >> client.month;
 }
 
 void printClientData(const ClientData& client) {
@@ -38,9 +45,10 @@ void printClientData(const ClientData& client) {
 }
 
 int main() {
+    cout << "Введите код клиента(K): ";
     int K;
     cin >> K;
-
+    cout << "Введите количество клиентов: ";
     int N;
     cin >> N;
 
