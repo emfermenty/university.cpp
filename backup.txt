@@ -6,8 +6,7 @@ CREATE TABLE zxc.user (
 
 CREATE TABLE zxc.sensor (
   id serial PRIMARY KEY,
-imei numeric NOT NULL,
-  device_id numeric NOT NULL,
+  imei numeric NOT NULL,
   user_id int NOT NULL,
   FOREIGN KEY(user_id) REFERENCES zxc.user(id)
 );
@@ -22,16 +21,15 @@ CREATE TABLE zxc.track (
 
 CREATE TABLE zxc.geo_data (
   id serial PRIMARY KEY,
-  serial_id int NOT NULL,
-  latitude numeric,
-  longitude numeric,
-  height numeric,
-  speed numeric,
-  date_time numeric,
-  course numeric,
-  battery_voltage numeric,
-  satellite_count numeric,
-  sensor_id int,
+  sensor_id int NOT NULL,
+  latitude double precision,
+  longitude double precision,
+  height double precision,
+  speed double precision,
+  date_time timestamp,
+  course double precision,
+  battery_voltage double precision,
+  satellite_count double precision,
   FOREIGN KEY (sensor_id) REFERENCES zxc.sensor(id)
 );
 ALTER TABLE sensor ALTER COLUMN imei TYPE char(15),
