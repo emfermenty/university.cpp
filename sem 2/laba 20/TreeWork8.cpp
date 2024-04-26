@@ -18,9 +18,9 @@ void printlkp(PNode p1){
     if (!p1) {
         return;
     }
-    printlkp(p1->Left); // Рекурсивно выводим левое поддерево
-    pt << p1->Data; // Выводим значение текущей вершины
-    printlkp(p1->Right); // Рекурсивно выводим правое поддерево
+    printlkp(p1->Left); 
+    pt << p1->Data; 
+    printlkp(p1->Right); 
 }
 
 void Solve()
