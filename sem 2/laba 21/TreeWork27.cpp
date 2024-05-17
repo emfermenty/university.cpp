@@ -19,10 +19,27 @@ Node* deleteRoot(Node* root) {
         temp = temp->Left;
     }
     temp->Left = root->Left;
+    delete root;
     return root->Right;
 }
 
-void PrintTree(Node* tree, string& stroka) {
+string stringify(Node* node) {
+    if (node == nullptr) {
+        return "";
+    }
+    if (node->Left == nullptr && node->Right == nullptr) {
+        return "(" + to_string(node->Data) + ")";
+    }
+    if (node->Left == nullptr) {
+        return "(" + to_string(node->Data) + stringify(node->Right) + ")";
+    }
+    if (node->Right == nullptr) {
+        return "(" + stringify(node->Left) + to_string(node->Data) + ")";
+    }
+    return "(" + stringify(node->Left) + to_string(node->Data) + stringify(node->Right) + ")";
+}
+
+/*void PrintTree(Node* tree, string& stroka) {
     if (tree != NULL) {
         stroka += "(";
         PrintTree(tree->Left, stroka);
@@ -30,7 +47,7 @@ void PrintTree(Node* tree, string& stroka) {
         PrintTree(tree->Right, stroka);
         stroka += ")";
     }
-}
+}*/
 
 
 void Solve()
@@ -40,8 +57,8 @@ void Solve()
     GetP(&P1);
     Node* root = deleteRoot(P1);
     //pt << to_string(root->Data);
-    string строка;
-    PrintTree(root, строка);
+    string строка = stringify(root);
+    //PrintTree(root, строка);
     строка.erase(строка.begin());
     строка.erase(строка.end() - 1);
     pt << строка;
