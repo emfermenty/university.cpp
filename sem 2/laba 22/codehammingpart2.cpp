@@ -24,7 +24,7 @@ vector<int> decomposeIntoMaxPowersOfTwo(int number) {
 
 int main() {
     setlocale(LC_ALL, "RU");
-    string alpha = "0000100001010";
+    string alpha = "0010100001010";
     int m = alpha.length();
     int k;
     for (int i = 0;; i++) {
@@ -35,11 +35,12 @@ int main() {
     }
     //int c = m + k;
     vector<int> razryad;
+    cout << "Контрольные разряды: ";
     for (int i = 0; i < k; i++) {
         razryad.push_back((pow(2, i)) - 1);
-        cout << (pow(2, i)) - 1 << " ";
+        cout << (pow(2, i)) << " ";
     }
-
+    cout << endl;
     vector<int>::iterator iter = razryad.begin();
     vector<int> махинация;
     //razryad.push_back(0);
@@ -73,18 +74,20 @@ int main() {
             qwe++;
         }
     }
-    cout << "Ошибки в разрядах ";
+    cout << "Необходимо сложить разряды, чтобы получить ошибку: ";
     int again = 0;
     for (int s = 0; s < махинация.size(); s++) {
         cout << махинация[s] << " ";
         again += махинация[s];
     }
+
     if(again == 0){
-        cout<< "Слово без ошибок";
+        cout << "\n" << "Слово без ошибок ";
     } else {
-        if(alpha[again] == '0')
-            alpha[again] = '1';
+        if(alpha[again-1] == '0')
+            alpha[again-1] = '1';
             else
-            alpha[again] = '0';
+            alpha[again-1] = '0';
+            cout << "\n" << "Слово после исправления выглядит так: " << alpha;
     }
 }
