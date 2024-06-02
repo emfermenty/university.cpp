@@ -46,26 +46,41 @@ void deleteNode(Node*& head, int value) {
     do {
         if (current->data == value) {
             if (current == head) {
-                head = head->next;
+                if (head->next == head) {
+                    delete head;
+                    head = nullptr;
+                }
+                else {
+                    Node* temp = head;
+                    while (temp->next != head) {
+                        temp = temp->next;
+                    }
+                    temp->next = head->next;
+                    head = head->next;
+                    delete current;
+                }
             }
             else {
                 previous->next = current->next;
+                delete current;
             }
-            delete current;
             return;
         }
         previous = current;
         current = current->next;
     } while (current != head);
 
-    std::cout << "Element not found" << endl;
+    std::cout << "Element not found" << std::endl;
 }
 
 int main() {
     setlocale(LC_ALL, "Russian");
-    int n = 12;
-    int m = 8;
-    int k = 6;
+    int n;
+    cin >> n;
+    int m;
+    cin >> m;
+    int k;
+    cin >> k;
     Node* head = new Node(1);
     Node* current = head;
     for (int i = 2; i <= n; i++) {
@@ -100,11 +115,11 @@ int main() {
     cout << current->data << endl;
 
     Node* temp = tea;
-    for (int i = 0; i < (n-1) / 2; i++) {
+    for (int i = 0; i < (n - 1) / 2; i++) {
         temp = tea;
         int count = 1;
         while (count != k) {
-    //        cout << temp->data << " ";
+            //        cout << temp->data << " ";
             temp = temp->next;
             count++;
         }
@@ -112,7 +127,7 @@ int main() {
         tea = temp->next;
         deleteNode(head, temp->data);
     }
-
+    cout << "позиции, чтобы груз не выкинули " << endl;
     current = head;
     while (current->next != head) {
         cout << current->data << " ";
