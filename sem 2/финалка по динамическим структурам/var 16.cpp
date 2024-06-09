@@ -1,17 +1,3 @@
-/*«Хитрый купец» Два купца отправились торговать за море. Каждый из них
-повез по N одинаковых тюков с товаром. В пути корабль попал в шторм и дал
-течь. Чтобы корабль не затонул, капитан приказал поднять весь груз на палубу
-корабля, расставить его вдоль бортов по периметру и выбросить за борт
-половину груза. Груз выбрасывается по следующему правилу:
-• каждый тюк получает порядковый номер, начиная с тюка, стоящего на
-носу корабля;
-• их нумерация осуществляется по часовой стрелке;
-• номер первого выброшенного тюка соответствует текущему числу
-месяца M;
-• через K тюков следующий тюк с товаром выбрасывается. Один из
-купцов прознал про это правило. Как необходимо расставить ему груз,
-чтобы ни один из его тюков не был выброшен?
-Использовать циклический однонаправленный список.*/
 #include <iostream>
 
 using namespace std;
@@ -20,115 +6,106 @@ using namespace std;
 struct Node {
     int data;
     Node* next;
-
+    //для более простого создания узла
     Node(int val) : data(val), next(nullptr) {}
 };
 
+// поиск элемента в списке
 Node* searchElement(Node* head, int target) {
-    Node* current = head;
-    while (current != nullptr) {
+    Node* current = head; //создаем еще один указатель на начало
+    while (current != nullptr) { // проходимся по всему списку
         if (current->data == target) {
             return current; // возвращаем узел, если найден элемент
         }
-        current = current->next;
+        current = current->next; // двигаем в цикле
     }
     return nullptr; // если элемент не был найден
 }
 
-void deleteNode(Node*& head, int value) {
+void deleteNode(Node*& head, int value) { // удаение элементов
     if (head == nullptr) {
-        return;
+        return; // если пусто, ретурн
     }
-
-    Node* current = head;
-    Node* previous = nullptr;
-
+    Node* current = head; // указатель с начала 
+    Node* previous = nullptr; // с конца
     do {
-        if (current->data == value) {
-            if (current == head) {
-                if (head->next == head) {
-                    delete head;
+        if (current->data == value) { //если найденный элемент соответсвует
+            if (current == head) { // если это первый
+                if (head->next == head) { // и второй равен указателю первого
+                    delete head; // то удаляем первый
                     head = nullptr;
-                }
-                else {
-                    Node* temp = head;
+                } 
+                else { // если следующий не имеет указатель первого
+                    Node* temp = head; // запоминаем указатель на голову
                     while (temp->next != head) {
-                        temp = temp->next;
+                        temp = temp->next; //двигаемся до последнего
                     }
-                    temp->next = head->next;
-                    head = head->next;
-                    delete current;
+                    temp->next = head->next; // последнему меняем указатель на второй элемент
+                    head = head->next; // второй становится первым
+                    delete current; // первый удаляется
                 }
             }
-            else {
-                previous->next = current->next;
+            else { // если не первый
+                previous->next = current->next; // то стандартное удаление 
                 delete current;
             }
             return;
         }
-        previous = current;
+        previous = current; // двигаем указатель в цикле
         current = current->next;
-    } while (current != head);
+    } while (current != head); // пока не пройдем по кругу
 
-    std::cout << "Element not found" << std::endl;
+    cout << "Element not found" << endl;
 }
 
 int main() {
-    setlocale(LC_ALL, "Russian");
-    int n;
+    setlocale(LC_ALL, "Russian"); 
+    int n; // кол-во грузов
     cin >> n;
-    int m;
+    int m; // номер месяца
     cin >> m;
-    int k;
+    int k; // переодичность
     cin >> k;
-    Node* head = new Node(1);
-    Node* current = head;
+    Node* head = new Node(1); // создаем узел, начиная нумеровать
+    Node* current = head; // указатель на голову
     for (int i = 2; i <= n; i++) {
-        current->next = new Node(i);
+        current->next = new Node(i); // добавляем все грузы в список
         current = current->next;
     }
-    current->next = head;
+    current->next = head; // циклим список
 
-    current = head;
-    while (current->next != head) {
+    current = head; // переходим в начало
+    while (current->next != head) { // вывод изначального спика
+        cout << current->data << " ";
+        current = current->next;
+    }
+    cout << current->data << endl;
+    // находим элемент месяца
+    Node* result = searchElement(head, m); // находим элемент месяца
+    Node* tea = result->next; // чтобы проще удалять дальше, элемент на следующий запоминаем
+
+    deleteNode(head, m); // удаляем найденный элемент
+
+    current = head; 
+    while (current->next != head) { //вывод элементов после удаления номера месяца
         cout << current->data << " ";
         current = current->next;
     }
     cout << current->data << endl;
 
-    Node* result = searchElement(head, m);
-
-    if (result != nullptr) {
-        cout << "Найден элемент с данными: " << result->data << endl;
-    }
-    else {
-        cout << "Элемент не найден" << endl;
-    }
-    Node* tea = result->next;
-    deleteNode(head, m);
-
-    current = head;
-    while (current->next != head) {
-        cout << current->data << " ";
-        current = current->next;
-    }
-    cout << current->data << endl;
-
-    Node* temp = tea;
-    for (int i = 0; i < (n - 1) / 2; i++) {
-        temp = tea;
-        int count = 1;
-        while (count != k) {
-            //        cout << temp->data << " ";
-            temp = temp->next;
+    Node* temp = tea; //еще один вспомогательный указатель
+    for (int i = 0; i < (n - 1) / 2; i++) { // цикл с половиной элементов
+        temp = tea; 
+        int count = 1; // ставим счетчик = 1
+        while (count != k) { // проходим, пока не пройдет переодичность K
+            temp = temp->next; 
             count++;
         }
-        //cout << "\n";
-        tea = temp->next;
-        deleteNode(head, temp->data);
+        tea = temp->next; // запоминаем указатель на следующий
+        deleteNode(head, temp->data); // удаляем элемент, который прошел после переодичности K
     }
     cout << "позиции, чтобы груз не выкинули " << endl;
-    current = head;
+    current = head; // конечное удаление элемента
     while (current->next != head) {
         cout << current->data << " ";
         current = current->next;
