@@ -1,4 +1,4 @@
-##include <iostream>
+#include <iostream>
 #include <string>
 
 using namespace std;
@@ -67,26 +67,55 @@ int main() {
     int n; // кол-во грузов
     cin >> input;
     try { // проверка на входные данные
-        n = stoi(input); // преобразуем строку в число
+        size_t pos;
+        n = stoi(input, &pos); // преобразуем строку в число
+        if (pos < input.size()) {
+            throw invalid_argument("Ошибка: Введенная строка не является целым числом.");
+            return 0;
+        }
     } catch (const invalid_argument& e) { // встроенное исключение в c++
         cerr << "Не может быть словом / символом" << endl; // если это не число, выбрасываем исключение
         return 1;
+    } catch (const out_of_range& e) {
+        cerr << "Ошибка: Число находится вне диапазона типа int." << endl;
     }
     int m; // номер месяца
     cin >> input;
-    try { // точно такая же проверка как выше
-        m = stoi(input);
-    } catch (const invalid_argument& e) {
-        cerr << "Не может быть словом / символом" << endl;
+    try { // проверка на входные данные
+        size_t pos;
+        m = stoi(input, &pos); // преобразуем строку в число
+        if (pos < input.size()) {
+            throw invalid_argument("Ошибка: Введенная строка не является целым числом.");
+            return 0;
+        }
+    }
+    catch (const invalid_argument& e) { // встроенное исключение в c++
+        cerr << "Не может быть словом / символом" << endl; // если это не число, выбрасываем исключение
         return 1;
+    }
+    catch (const out_of_range& e) { // если число больше инта
+        cerr << "Ошибка: Число находится вне диапазона типа int." << endl;
+    }
+    if (m > 12 || m > n) { // если m не коректный
+        cout << "Месяц не может быть больше 12 или количества грузов";
+        return 0;
     }
     int k; // переодичность
     cin >> input;
-    try { // еще одна такая же проверка
-        k = stoi(input);
-    } catch (const invalid_argument& e) {
-        cerr << "Не может быть словом / символом" << endl;
+    try { // проверка на входные данные
+        size_t pos;
+        k = stoi(input, &pos); // преобразуем строку в число
+        if (pos < input.size()) {
+            throw invalid_argument("Ошибка: Введенная строка не является целым числом.");
+            return 0;
+        }
+    }
+    catch (const invalid_argument& e) { // встроенное исключение в c++
+        cerr << "Не может быть словом / символом" << endl; // если это не число, выбрасываем исключение
         return 1;
+    }
+    catch (const out_of_range& e) {
+        cerr << "Ошибка: Число находится вне диапазона типа int." << endl;
     }
 
     Node* head = new Node(1); // создаем узел, начиная нумеровать
