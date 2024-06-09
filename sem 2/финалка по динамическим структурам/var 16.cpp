@@ -1,4 +1,5 @@
-#include <iostream>
+##include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -9,6 +10,7 @@ struct Node {
     //для более простого создания узла
     Node(int val) : data(val), next(nullptr) {}
 };
+
 
 // поиск элемента в списке
 Node* searchElement(Node* head, int target) {
@@ -60,12 +62,33 @@ void deleteNode(Node*& head, int value) { // удаение элементов
 
 int main() {
     setlocale(LC_ALL, "Russian"); 
+    string input;
+
     int n; // кол-во грузов
-    cin >> n;
+    cin >> input;
+    try { // проверка на входные данные
+        n = stoi(input); // преобразуем строку в число
+    } catch (const invalid_argument& e) { // встроенное исключение в c++
+        cerr << "Не может быть словом / символом" << endl; // если это не число, выбрасываем исключение
+        return 1;
+    }
     int m; // номер месяца
-    cin >> m;
+    cin >> input;
+    try { // точно такая же проверка как выше
+        m = stoi(input);
+    } catch (const invalid_argument& e) {
+        cerr << "Не может быть словом / символом" << endl;
+        return 1;
+    }
     int k; // переодичность
-    cin >> k;
+    cin >> input;
+    try { // еще одна такая же проверка
+        k = stoi(input);
+    } catch (const invalid_argument& e) {
+        cerr << "Не может быть словом / символом" << endl;
+        return 1;
+    }
+
     Node* head = new Node(1); // создаем узел, начиная нумеровать
     Node* current = head; // указатель на голову
     for (int i = 2; i <= n; i++) {
