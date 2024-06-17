@@ -4,7 +4,8 @@
 using namespace std;
 
 // Структура для элементов односвязного списка
-struct Node {
+class Node {
+public:
     int data;
     Node* next;
     //для более простого создания узла
@@ -36,7 +37,7 @@ void deleteNode(Node*& head, int value) { // удаение элементов
                 if (head->next == head) { // и второй равен указателю первого
                     delete head; // то удаляем первый
                     head = nullptr;
-                } 
+                }
                 else { // если следующий не имеет указатель первого
                     Node* temp = head; // запоминаем указатель на голову
                     while (temp->next != head) {
@@ -61,9 +62,9 @@ void deleteNode(Node*& head, int value) { // удаение элементов
 }
 
 int main() {
-    setlocale(LC_ALL, "Russian"); 
+    setlocale(LC_ALL, "Russian");
     string input;
-
+    cout << "Введите количество грузов: ";
     int n; // кол-во грузов
     cin >> input;
     try { // проверка на входные данные
@@ -73,12 +74,15 @@ int main() {
             throw invalid_argument("Ошибка: Введенная строка не является целым числом.");
             return 0;
         }
-    } catch (const invalid_argument& e) { // встроенное исключение в c++
-        cerr << "Не может быть словом / символом" << endl; // если это не число, выбрасываем исключение
-        return 1;
-    } catch (const out_of_range& e) {
-        cerr << "Ошибка: Число находится вне диапазона типа int." << endl;
     }
+    catch (const invalid_argument& e) { // встроенное исключение в c++
+        cerr << "Не может быть словом / символом / вещественным числом" << endl; // если это не число, выбрасываем исключение
+        return 1;
+    }
+    catch (const out_of_range& e) {
+        cerr << "Число находится вне диапазона типа int." << endl;
+    }
+    cout << "Введите номер месяца(от 1 до 12): ";
     int m; // номер месяца
     cin >> input;
     try { // проверка на входные данные
@@ -90,16 +94,17 @@ int main() {
         }
     }
     catch (const invalid_argument& e) { // встроенное исключение в c++
-        cerr << "Не может быть словом / символом" << endl; // если это не число, выбрасываем исключение
+        cerr << "Не может быть словом / символом / вещественным числом" << endl; // если это не число, выбрасываем исключение
         return 1;
     }
     catch (const out_of_range& e) { // если число больше инта
-        cerr << "Ошибка: Число находится вне диапазона типа int." << endl;
+        cerr << "Число находится вне диапазона типа int." << endl;
     }
     if (m > 12 || m > n) { // если m не коректный
         cout << "Месяц не может быть больше 12 или количества грузов";
         return 0;
     }
+    cout << "Введите периодичность(K): ";
     int k; // переодичность
     cin >> input;
     try { // проверка на входные данные
@@ -127,6 +132,7 @@ int main() {
     current->next = head; // циклим список
 
     current = head; // переходим в начало
+    cout << "Все грузы: ";
     while (current->next != head) { // вывод изначального спика
         cout << current->data << " ";
         current = current->next;
@@ -137,8 +143,8 @@ int main() {
     Node* tea = result->next; // чтобы проще удалять дальше, элемент на следующий запоминаем
 
     deleteNode(head, m); // удаляем найденный элемент
-
-    current = head; 
+    cout << "Грузы, после удаления первого: ";
+    current = head;
     while (current->next != head) { //вывод элементов после удаления номера месяца
         cout << current->data << " ";
         current = current->next;
@@ -147,16 +153,16 @@ int main() {
 
     Node* temp = tea; //еще один вспомогательный указатель
     for (int i = 0; i < (n - 1) / 2; i++) { // цикл с половиной элементов
-        temp = tea; 
-        int count = 1; // ставим счетчик = 1
+        temp = tea;
+        int count = 0; // ставим счетчик = 1
         while (count != k) { // проходим, пока не пройдет переодичность K
-            temp = temp->next; 
+            temp = temp->next;
             count++;
         }
         tea = temp->next; // запоминаем указатель на следующий
         deleteNode(head, temp->data); // удаляем элемент, который прошел после переодичности K
     }
-    cout << "позиции, чтобы груз не выкинули " << endl;
+    cout << "Позиции, чтобы груз не выкинули: ";
     current = head; // конечное удаление элемента
     while (current->next != head) {
         cout << current->data << " ";
